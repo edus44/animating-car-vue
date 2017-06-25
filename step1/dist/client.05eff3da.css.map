@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack:///./Car.vue"],"names":[],"mappings":"AACA,cACI,WACA,YACA,cACA,SACA,SAAW","file":"client.05eff3da.css","sourcesContent":["\nhtml,body,svg{\n    width: 100%;\n    height: 100%;\n    display: block;\n    margin:0;\n    padding: 0;\n}\n\n\n\n// WEBPACK FOOTER //\n// ./Car.vue"],"sourceRoot":""}
