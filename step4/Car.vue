@@ -66,10 +66,6 @@ export default {
             this.turn.tween = new TWEEN.Tween(this.turn)
                 .to({speed: 1 * dir},500)
                 .easing(TWEEN.Easing.Quadratic.In)
-                .chain(
-                    new TWEEN.Tween(this.turn)
-                    .repeat(Infinity)
-                )
                 .start()
         },
 

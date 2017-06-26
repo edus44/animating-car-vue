@@ -79,10 +79,6 @@ export default {
             this[type].tween = new TWEEN.Tween(this[type])
                 .to({speed: dir},500)
                 .easing(TWEEN.Easing.Quadratic.In)
-                .chain(
-                    new TWEEN.Tween(this[type])
-                    .repeat(Infinity)
-                )
                 .start()
         },
 
