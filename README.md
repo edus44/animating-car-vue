@@ -1,7 +1,7 @@
 ANIMATING A CAR WITH VUEJS
 =========================
 
-[Blog post](http://www.gigigo.com/2017/06/26/animating-a-car-with-vuejs/)
+[Blog post](http://www.gigigo.com/2017/06/26/animating-a-car-with-vuejs/?lang=en)
 
 * [Step 1](https://edus44.github.io/animating-car-vue/step1/dist/index.html)
 * [Step 2](https://edus44.github.io/animating-car-vue/step2/dist/index.html)
