@@ -6,66 +6,13 @@
 <body>
 
 <ul>
+    <li><a href="https://github.com/edus44/animating-car-vue">Post</a></li>
     <li><a href="step1/dist/index.html">Step 1</a></li>
     <li><a href="step2/dist/index.html">Step 2</a></li>
     <li><a href="step3/dist/index.html">Step 3</a></li>
     <li><a href="step4/dist/index.html">Step 4</a></li>
     <li><a href="step5/dist/index.html">Step 5</a></li>
     <li><a href="step6/dist/index.html">Step 6</a></li>
-    
-<span style="font-weight: 400">Tendemos a pensar que las librerías de vistas de Javascript (la V del patrón MVC) solo valen para construir grandes paneles, con formularios chulos &nbsp;y un montón de interacciones, y que para hacer un juego necesitamos sí o sí una librería o framework para tal fin.</span>
-
-<span style="font-weight: 400">En este experimento veremos cómo podemos usar <a href="https://vuejs.org/" target="_blank" rel="nofollow noopener">VueJS</a> y un poco de SVG para animar un cochecito a través de &lt;body&gt;.</span>
-<h2>Empezamos</h2>
-<span style="font-weight: 400">Necesitaremos tener instalado <a href="https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd?hl=es" target="_blank" rel="noopener">vue-cli</a> en nuestro ordenador, lo usaremos para desarrollar y compilar nuestro código con cero esfuerzo.&nbsp;También es interesante tener la extensión de desarrollo&nbsp;<a href="https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd?hl=es" target="_blank" rel="noopener">Vue.js devtools</a>. Para instalar <em>vue-cli</em> hacemos:</span>
-<pre class="lang:sh decode:true">npm i -g vue-cli</pre>
-<span style="font-weight: 400">Lo siguiente sería crear en una carpeta vacía el archivo donde irá todo el código de nuestro componente, lo llamaremos por ejemplo <em>Car.vue</em>. &nbsp;Más info sobre los <a href="https://vuejs.org/v2/guide/single-file-components.html" target="_blank" rel="noopener">Single File Components</a>. Lo siguiente que necesitaremos es <a href="https://raw.githubusercontent.com/edus44/animating-car-vue/master/car.svg" target="_blank" rel="noopener">descargar</a> nuestro flamante coche SVG al lado de nuestro archivo <em>.vue</em>, lo guardamos como <em>car.svg</em>. (Fuente: <a href="http://www.flaticon.com/free-icon/car-top_84930" target="_blank" rel="noopener">flaticon</a>)</span>
-<h2>A pintar</h2>
-Rellenamos nuestro archivo Car.vue con <a href="https://github.com/edus44/animating-car-vue/blob/master/step1/Car.vue" target="_blank" rel="noopener">este código</a>&nbsp;y ejecutamos:
-<pre class="lang:sh decode:true">vue build -o Car.vue</pre>
-y deberíamos ver en el navegador:
-
-<img class="wp-image-1699 size-full" src="http://www.gigigo.com/wp-content/uploads/2017/06/step1.png" alt="" width="124" height="112"><a href="https://edus44.github.io/animating-car-vue/step1/dist/index.html" target="_blank" rel="noopener">Ver ejemplo</a>, <a href="https://github.com/edus44/animating-car-vue/tree/master/step1" target="_blank" rel="noopener">Ver código</a>
-
-<span style="font-weight: 400">El elemento <em>use</em> nos permite insertar elementos SVG desde otros recursos. Gracias al bindeo de atributos de Vue, le estamos pasando la ruta donde puede encontrar nuestro elemento coche, el ancho y el alto que ocupa, y las coordenadas x,y donde lo dibujaremos.</span>
-
-<span style="font-weight: 400">Lo siguiente que necesitaremos es darle la posiblidad de <strong>girar</strong>, podemos conseguir esto usando las propiedades computadas:</span>
-
-<img class="alignnone wp-image-1706 size-full" src="http://www.gigigo.com/wp-content/uploads/2017/06/step2.png" alt="" width="117" height="113"><a href="https://edus44.github.io/animating-car-vue/step2/dist/index.html" target="_blank" rel="noopener">Ver ejemplo</a>, <a href="https://github.com/edus44/animating-car-vue/tree/master/step2" target="_blank" rel="noopener">Ver código</a>
-
-<span style="font-weight: 400">Aprovechamos para desplazar la posición del coche para hacer coincidir el eje de rotación con nuestras coordenadas x,y.</span>
-<h2>Animando el giro</h2>
-<span style="font-weight: 400">Ahora vamos a darle un poco de <strong>animación </strong>al giro, para ello escuchamos el evento <em>keydown</em> que llamara a una función de nuestro componente, la cual incrementará o decrementará el ángulo donde mira nuestro coche:</span>
-
-<img class="alignnone wp-image-1708 size-full" src="http://www.gigigo.com/wp-content/uploads/2017/06/step3.gif" alt="" width="205" height="120"><a href="https://edus44.github.io/animating-car-vue/step3/dist/index.html" target="_blank" rel="noopener">Ver ejemplo</a>, <a href="https://github.com/edus44/animating-car-vue/tree/master/step3" target="_blank" rel="noopener">Ver código</a>
-
-<span style="font-weight: 400">Podemos ver que si pulsamos la tecla de dirección izquierda o derecha, nuestro coche se girará acorde, pero de una forma escalonada, lineal y poco precisa. Para mejorar esto usaremos una técnica de animación llamada <em>tweening</em>, que nos dará fluidez y naturalidad en las transiciones. </span>
-
-<span style="font-weight: 400">Usaremos <a href="https://cdnjs.cloudflare.com/ajax/libs/tween.js/16.3.5/Tween.min.js" target="_blank" rel="noopener">esta</a> pequeña herramienta, que descargaremos en el archivo<em> tween.js</em>.</span>
-<h5>Tweening</h5>
-<span style="font-weight: 400">Ahora necesitaremos dos métodos, uno para empezar a girar y otro para parar. Escucharemos el evento <em>keyup</em> para poder saberlo. </span>
-
-<span style="font-weight: 400">Para empezar a girar definiremos nuestro <em>tween</em>, al que le vamos a decir que aumente la velocidad de giro de 0 a 1 ( o -1, según la dirección) en 500ms, usando una función “easing” de entrada. Para parar simplemente le decimos que disminuya a 0 la velocidad usando un “easing” de salida.</span>
-
-<span style="font-weight: 400">El método <em>render</em> se estará ejecutando recursivamente usando <a href="https://developer.mozilla.org/es/docs/Web/API/Window/requestAnimationFrame" target="_blank" rel="noopener">requestAnimationFrame</a> y se encargará de actualizar el valor del tween y aplicarlo al ángulo de nuestro coche.</span>
-
-<img class="alignnone wp-image-1710 size-full" src="http://www.gigigo.com/wp-content/uploads/2017/06/step4.gif" alt="" width="205" height="120"><a href="https://edus44.github.io/animating-car-vue/step4/dist/index.html" target="_blank" rel="noopener">Ver ejemplo</a>, <a href="https://github.com/edus44/animating-car-vue/tree/master/step4" target="_blank" rel="noopener">Ver código</a>
-<h2>A moverse</h2>
-<span style="font-weight: 400">Para darle <strong>movimiento</strong> podemos reutilizar nuestras funciones que gestionan la velocidad de giro para que también puedan hacerlo de la velocidad de movimiento.</span>
-
-<span style="font-weight: 400">Solo necesitaremos revisar nuestra función <em>render</em>, donde tendremos que usar un poco de <strong>trigonometría</strong> para aplicar la velocidad de desplazamiento del coche según su ángulo de giro.</span>
-
-<img class="alignnone wp-image-1714 size-full" src="http://www.gigigo.com/wp-content/uploads/2017/06/step5.gif" alt="" width="640" height="320">
-
-<a href="https://edus44.github.io/animating-car-vue/step5/dist/index.html" target="_blank" rel="noopener">Ver ejemplo</a>, <a href="https://github.com/edus44/animating-car-vue/tree/master/step5" target="_blank" rel="noopener">Ver código</a>
-
-&nbsp;
-
-<span style="font-weight: 400">Y ya está, ya tenemos nuestro cochecito animado de una forma fluida y ágil. Sólo le quedaría unos pocos retoques en cuanto al bindeo de teclas, limites de pantalla y alguna optimización de recursos (como puedes ver en&nbsp;<a href="https://edus44.github.io/animating-car-vue/step6/dist/index.html" target="_blank" rel="noopener">Ver ejemplo</a>, <a href="https://github.com/edus44/animating-car-vue/tree/master/step6" target="_blank" rel="noopener">Ver código</a> ) y ya tendrías una pieza reutilizable para montarte un juego con nuestra librería de vista.</span>
-<h3>Bonus</h3>
-<span style="font-weight: 400"><a href="http://rocket-soccer.surge.sh/" target="_blank" rel="noopener">Aquí</a> puedes ver otro ejemplo donde intervienen más coches y una pelota, ¿alguien dijo Rocket League? (Te puedes mover con las teclas de dirección, WASD y IJKL).&nbsp;<a href="https://github.com/edus44/rocket-soccer" target="_blank" rel="noopener">Código fuente</a>.</span>
-    
-    
 </ul>
     
 </body>
